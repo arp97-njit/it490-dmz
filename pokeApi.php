@@ -90,11 +90,14 @@
                 $tempNum = -1;
                 foreach($urlArray as $piece){
                     if(((int)$piece)){
+                        if(((int)$piece) > 152){
+                            break;
+                        }
                         $tempNum = (int)$piece;
                         array_push($pokemonToCheck, (int)$piece);
                     }
                 }
-                if ($tempNum > 152){
+                if ($tempNum > 152){  
                     break; //exit loop bc everything else is not in valid range of our dex
                 }
             }
