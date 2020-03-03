@@ -123,7 +123,7 @@
             return $x;
     }
 
-    echo searchType("water");
+    //echo searchType("water");
 
 
 ?>
