@@ -33,12 +33,12 @@
 
             $rtnJson -> pokemonName=$pokemonInfo -> name;
         
-            $rtnJson -> speed=$pokemonInfo -> stats[0] -> stat -> name;
-            $rtnJson -> spDef=$pokemonInfo -> stats[1] -> stat -> name;
-            $rtnJson -> spAtk=$pokemonInfo -> stats[2] -> stat -> name;
-            $rtnJson -> def=$pokemonInfo -> stats[3] -> stat -> name;
-            $rtnJson -> atk=$pokemonInfo -> stats[4] -> stat -> name;
-            $rtnJson -> hp=$pokemonInfo -> stats[5] -> stat -> name;
+            $rtnJson -> speed=$pokemonInfo -> stats[0] -> base_stat;
+            $rtnJson -> spDef=$pokemonInfo -> stats[1] -> base_stat;
+            $rtnJson -> spAtk=$pokemonInfo -> stats[2] -> base_stat;
+            $rtnJson -> def=$pokemonInfo -> stats[3] -> base_stat;
+            $rtnJson -> atk=$pokemonInfo -> stats[4] -> base_stat;
+            $rtnJson -> hp=$pokemonInfo -> stats[5] -> base_stat;
             $x = json_encode($rtnJson);
         
             curl_close($ch);
