@@ -31,23 +31,31 @@
                     else
                     {
                         //api call with ability
-                        $rspMessage = searchAbility($request['ability']);
+                        $rspMessage = searchAbility($request['ability'], global $noDdosCounter);
+                        $temp = json_decode($rspMessage);
+                        global $noDdosCounter += $temp -> ddos;
                     }
                 }
                 else
                 {
                     //api call with type
-                    $rspMessage = searchType($request['pokeType']);
+                    $rspMessage = searchType($request['pokeType'], global $noDdosCounter);
+                    $temp = json_decode($rspMessage);
+                    global $noDdosCounter += $temp -> ddos;
                 }
             }
             else
             {
                 //api call with name/pokedex number
                 if($request['pokemonNum'] != "na"){
-                    $rspMessage = searchdexName($request['pokemonNum']);
+                    $rspMessage = searchdexName($request['pokemonNum'], global $noDdosCounter);
+                    $temp = json_decode($rspMessage);
+                    global $noDdosCounter += $temp -> ddos;
                 }
                 else{
-                    $rspMessage = searchdexName($request['name']);
+                    $rspMessage = searchdexName($request['name'], global $noDdosCounter);
+                    $temp = json_decode($rspMessage);
+                    global $noDdosCounter += $temp -> ddos;
                 }
             }
         }
@@ -56,7 +64,7 @@
 
     }
 
-
+    $noDdosCounter = 0;
     $server = new rabbitMQServer('/home/aadarsh/Desktop/git/rabbitmqphp_example/rabbitMQ_db.ini', 'testServer');
 
 
@@ -68,5 +76,4 @@
     //this works ^ calls the function in pokeApi.php
 
 ?>
-
 
