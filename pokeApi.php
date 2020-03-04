@@ -31,8 +31,14 @@
             $api_output = curl_exec($ch);
             $pokemonInfo = json_decode($api_output);
 
-            $rtnJson -> abilityName=$pokemonInfo -> abilities[0] -> ability -> name;
             $rtnJson -> pokemonName=$pokemonInfo -> name;
+        
+            $rtnJson -> speed=$pokemonInfo -> stats[0] -> stat -> name;
+            $rtnJson -> spDef=$pokemonInfo -> stats[1] -> stat -> name;
+            $rtnJson -> spAtk=$pokemonInfo -> stats[2] -> stat -> name;
+            $rtnJson -> def=$pokemonInfo -> stats[3] -> stat -> name;
+            $rtnJson -> atk=$pokemonInfo -> stats[4] -> stat -> name;
+            $rtnJson -> hp=$pokemonInfo -> stats[5] -> stat -> name;
             $x = json_encode($rtnJson);
         
             curl_close($ch);
@@ -49,11 +55,47 @@
             $api_output = curl_exec($ch);
             $pokemonInfo = json_decode($api_output);
 
-            $rtnJson -> n=$pokemonInfo -> pokemon;
+            //used to find what pokemon are of a given type in our valid range
+            $wholePokemonList = $pokemonInfo -> pokemon;
+            $pokemonToCheck = [];
+            foreach($wholePokemonList as $index){
+                $urlOfPoke = $index -> pokemon -> url;
+                $urlArray = explode("/", $urlOfPoke);
+                $tempNum = -1;
+                foreach($urlArray as $piece){
+                    if(((int)$piece)){
+                        if(((int)$piece) > 152){
+                            break;
+                        }
+                        $tempNum = (int)$piece;
+                        array_push($pokemonToCheck, (int)$piece);
+                    }
+                }
+                if ($tempNum > 152){
+                    break; //exit loop bc everything else is not in valid range of our dex
+                }
+            }
+            //finished populating list of pokemon that are valid
+            //$pokemonToCheck - has this list ^
+            $pokemonChecked = [];
+            $noDdosCounter = 1;
+            foreach($pokemonToCheck as $num){
+                if($noDdosCounter == 90){  //can call api max 100 times in 1 minute per IP address
+                    echo "I'm tired, time for a nap";
+                    sleep(60);
+                }
+                $tempString = ModifiedSearchdexName($num);
+                $noDdosCounter++;
+                array_push($pokemonChecked, $tempString);
+            }
+            
+            $rtnJson -> search="type";  //db can check this to know what type of search was performed and how to handle it
+            $rtnJson -> pokemonNames=$pokemonChecked;
             $x = json_encode($rtnJson);
 
             curl_close($ch);
             return $x;
+        
     }
     
     function ModifiedSearchdexName($dexOrName){ //given dex # or name of pokemon
@@ -123,7 +165,7 @@
             return $x;
     }
 
-    //echo searchType("water");
+    echo searchType("water");
 
 
 ?>
