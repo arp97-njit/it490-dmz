@@ -31,31 +31,23 @@
                     else
                     {
                         //api call with ability
-                        $rspMessage = searchAbility($request['ability'], global $noDdosCounter);
-                        $temp = json_decode($rspMessage);
-                        global $noDdosCounter += $temp -> ddos;
+                        $rspMessage = searchAbility($request['ability']);
                     }
                 }
                 else
                 {
                     //api call with type
-                    $rspMessage = searchType($request['pokeType'], global $noDdosCounter);
-                    $temp = json_decode($rspMessage);
-                    global $noDdosCounter += $temp -> ddos;
+                    $rspMessage = searchType($request['pokeType']);
                 }
             }
             else
             {
                 //api call with name/pokedex number
                 if($request['pokemonNum'] != "na"){
-                    $rspMessage = searchdexName($request['pokemonNum'], global $noDdosCounter);
-                    $temp = json_decode($rspMessage);
-                    global $noDdosCounter += $temp -> ddos;
+                    $rspMessage = searchdexName($request['pokemonNum']);
                 }
                 else{
-                    $rspMessage = searchdexName($request['name'], global $noDdosCounter);
-                    $temp = json_decode($rspMessage);
-                    global $noDdosCounter += $temp -> ddos;
+                    $rspMessage = searchdexName($request['name']);
                 }
             }
         }
@@ -64,7 +56,7 @@
 
     }
 
-    $noDdosCounter = 0;
+
     $server = new rabbitMQServer('/home/aadarsh/Desktop/git/rabbitmqphp_example/rabbitMQ_db.ini', 'testServer');
 
 

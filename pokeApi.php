@@ -6,7 +6,6 @@
     //Desc: calls poke api
 
     ini_set('display_errors',1); error_reporting(E_ALL);
-    $ddosCounter = 0;
     
 //TODO:
     //check pokemon being returned and check their name with api, if the id of that pokemon is above 151, ignore it and break the loop bc everything below is going to not be in acceptable range of pokedex
@@ -23,13 +22,7 @@
 //        array_push($outputArray, $testOutput);
 //    }
     
-    function searchdexName($dexOrName, $noDdosCounter){ //given dex # or name of pokemon
-        global $ddosCounter += $noDdosCounter;
-        if(global $ddosCounter == 90){  //can call api max 100 times in 1 minute per IP address
-            echo "I'm tired, time for a nap";
-            sleep(60);
-            global $ddosCounter = 0;
-        }
+    function searchdexName($dexOrName){ //given dex # or name of pokemon
         $rtnJson = new stdclass;
             $ch = curl_init();
 
@@ -40,8 +33,6 @@
 
             $rtnJson -> abilityName=$pokemonInfo -> abilities[0] -> ability -> name;
             $rtnJson -> pokemonName=$pokemonInfo -> name;
-            global $ddosCounter++;
-            $rtnJson -> ddos=global $ddosCounter;
             $x = json_encode($rtnJson);
         
             curl_close($ch);
@@ -49,13 +40,7 @@
     }
 
 
-    function searchAbility($abilityParam, $noDdosCounter){ //given ability of pokemon
-        global $ddosCounter += $noDdosCounter;
-        if(global $ddosCounter == 90){  //can call api max 100 times in 1 minute per IP address
-            echo "I'm tired, time for a nap";
-            sleep(60);
-            global $ddosCounter = 0;
-        }
+    function searchAbility($abilityParam){ //given ability of pokemon
             $rtnJson = new stdclass;
             $ch = curl_init();
 
@@ -65,21 +50,13 @@
             $pokemonInfo = json_decode($api_output);
 
             $rtnJson -> n=$pokemonInfo -> pokemon;
-        global $ddosCounter++;
-        $rtnJson -> ddos=global $ddosCounter;
             $x = json_encode($rtnJson);
 
             curl_close($ch);
             return $x;
     }
     
-    function ModifiedSearchdexName($dexOrName, $noDdosCounter){ //given dex # or name of pokemon
-        global $ddosCounter += $noDdosCounter;
-        if(global $ddosCounter == 90){  //can call api max 100 times in 1 minute per IP address
-            echo "I'm tired, time for a nap";
-            sleep(60);
-            global $ddosCounter = 0;
-        }
+    function ModifiedSearchdexName($dexOrName){ //given dex # or name of pokemon
             $rtnJson = new stdclass;
             $ch = curl_init();
 
@@ -89,21 +66,13 @@
             $pokemonInfo = json_decode($api_output);
 
             $rtnName = $pokemonInfo -> name;
-        global $ddosCounter++;
-        $rtnJson -> ddos=global $ddosCounter;
         
             curl_close($ch);
             return $rtnName;
     }
 
 
-    function searchType($typeParam, $noDdosCounter){  //given typing of pokemon
-        global $ddosCounter += $noDdosCounter;
-        if(global $ddosCounter == 90){  //can call api max 100 times in 1 minute per IP address
-            echo "I'm tired, time for a nap";
-            sleep(60);
-            global $ddosCounter = 0;
-        }
+    function searchType($typeParam){  //given typing of pokemon
             $rtnJson = new stdclass;
             $ch = curl_init();
 
@@ -142,13 +111,12 @@
                     sleep(60);
                 }
                 $tempString = ModifiedSearchdexName($num);
+                $noDdosCounter++;
                 array_push($pokemonChecked, $tempString);
             }
             
             $rtnJson -> search="type";  //db can check this to know what type of search was performed and how to handle it
             $rtnJson -> pokemonNames=$pokemonChecked;
-        global $ddosCounter++;
-        $rtnJson -> ddos=global $ddosCounter;
             $x = json_encode($rtnJson);
 
             curl_close($ch);
