@@ -164,8 +164,26 @@
             curl_close($ch);
             return $x;
     }
+    
+    function battleSystem($u1, $u2){  //add params
+        $rtnJson = new stdclass;
+        
+        $randomNumber1 = rand();
+        $randomNumber2 = rand();
+        if ($randomNumber1 > $randomNumber2){
+            rtnJson -> user1=1;
+            rtnJson -> user2=0;
+        }
+        else{
+            rtnJson -> user1=0;
+            rtnJson -> user2=1;
+        }
+        $x = json_encode($rtnJson);
+        return $x;
+        
+    }
 
-    echo searchType("water");
+    //echo searchType("water");
 
 
 ?>

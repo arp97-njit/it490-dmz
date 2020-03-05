@@ -51,6 +51,16 @@
                 }
             }
         }
+        elseif($request['type'] == "Battle"){  //battle system
+            //info to send to function
+            $user1 = $request['username_1'];
+            $user2 = $request['username_2'];
+            $rspMessage = battleSystem($user1, $user2);
+        }
+        
+        else{
+            return 0;
+        }
         
         return $rspMessage;
 
