@@ -58,17 +58,19 @@
             $rspMessage = battleSystem($user1, $user2);
         }
         
-        else{
-            return 0;
-        }
-        
+        elseif($request['type'] == "test"){
+		$rspMessage = "in test";
+	}
+
+	//var_dump($rspMessage);  	        
         return $rspMessage;
 
     }
 
 
-    $server = new rabbitMQServer('/home/aadarsh/Desktop/git/rabbitmqphp_example/rabbitMQ_db.ini', 'testServer');
+    $server = new rabbitMQServer('/home/aadarsh/Desktop/git/it490-dmz/rabbitMQ_db.ini', 'testServer');
 
+    
 
     $server->process_requests('requestProcessor');
 
@@ -78,4 +80,5 @@
     //this works ^ calls the function in pokeApi.php
 
 ?>
+
 
