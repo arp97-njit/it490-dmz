@@ -1,9 +1,9 @@
 <?php
 
-    require_once('/home/ubuntu/git/forProd/rabbitmqphp_example/path.inc');
-    require_once('/home/ubuntu/git/forProd/rabbitmqphp_example/get_host_info.inc');
-    require_once('/home/ubuntu/git/forProd/rabbitmqphp_example/rabbitMQLib.inc');
-    include '/home/ubuntu/git/forProd/pokeApi.php';
+    require_once('/home/ubuntu/git/it490-dmz/rabbitmqphp_example/path.inc');
+    require_once('/home/ubuntu/git/it490-dmz/rabbitmqphp_example/get_host_info.inc');
+    require_once('/home/ubuntu/git/it490-dmz/rabbitmqphp_example/rabbitMQLib.inc');
+    include '/home/ubuntu/git/it490-dmz/pokeApi.php';
 
 
 
@@ -68,7 +68,7 @@
     }
 
 
-    $server = new rabbitMQServer('/home/ubuntu/git/forProd/it490-dmz/rabbitMQ_db.ini', 'testServer');
+    $server = new rabbitMQServer('/home/ubuntu/git/it490-dmz/it490-dmz/rabbitMQ_db.ini', 'testServer');
 
     
 
