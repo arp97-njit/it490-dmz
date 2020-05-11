@@ -1,6 +1,8 @@
 <?php
     
-    
+require_once('/home/ubuntu/git/it490-dmz/rabbitmqphp_example/path.inc');
+    require_once('/home/ubuntu/git/it490-dmz/rabbitmqphp_example/get_host_info.inc');
+    require_once('/home/ubuntu/git/it490-dmz/rabbitmqphp_example/rabbitMQLib.inc');    
 //STEPS TO MAKE THIS SCRIPT WORK
 //1. Create empty directories "directoryToBuild" and "directoryToSend"
 //2. Set permissions for these directories: "sudo chmod 777 PATH_TO_DIRECTORIES"
@@ -19,7 +21,7 @@ foreach($files as $file){
 }
 
 
-$output = shell_exec("sudo sshpass -p 'password' scp /home/ubuntu/directoryToSend/dmzBundle.tar.gz ubuntu@10.0.0.201:/home/ubuntu/versions/frontend");
+$output = shell_exec("sudo sshpass -p 'password' scp /home/ubuntu/directoryToSend/dmzBundle.tar.gz ubuntu@10.0.0.201:/home/ubuntu/versions/dmz");
 
 //var dumps for error checking
 $files = scandir('/home/ubuntu/directoryToSend');
@@ -45,7 +47,7 @@ echo $response;
 
 //CODE FOR RMQ REQUEST
 function createClientRequest($request){
-    $client = new rabbitMQClient("/home/ubuntu/git/it490-dmz/it490-dmz/rabbitMQ_deployment.ini", "testServer");
+    $client = new rabbitMQClient("/home/ubuntu/git/it490-dmz/rabbitmqphp_example/rabbitMQ_deployment.ini", "testServer");
     $response = $client->send_request($request);
 
     return $response;
