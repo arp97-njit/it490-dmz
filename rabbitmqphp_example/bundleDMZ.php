@@ -36,7 +36,7 @@ foreach($files2 as $file){
 
 
 $request = array();
-$request['type'] = "deploy_frontend";
+$request['type'] = "deploy_dmz";
 
 $response = createClientRequest($request);
 echo "Response from deployment server: ";
@@ -45,7 +45,7 @@ echo $response;
 
 //CODE FOR RMQ REQUEST
 function createClientRequest($request){
-    $client = new rabbitMQClient("/home/ubuntu/git/it490-dmz/rabbitMQ_deployment.ini", "testServer");
+    $client = new rabbitMQClient("/home/ubuntu/git/it490-dmz/it490-dmz/rabbitMQ_deployment.ini", "testServer");
     $response = $client->send_request($request);
 
     return $response;
